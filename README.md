@@ -128,6 +128,7 @@ Analisis distribusi status risiko dropout dilakukan untuk memahami proporsi maha
 
 - **Diagram Batang**:  
   Grafik batang menunjukkan perbandingan persentase antara status aman dan berisiko tinggi. Sumbu X mewakili status risiko (0 = Aman, 1 = Risiko Tinggi), sementara sumbu Y menunjukkan persentase. Grafik ini membantu mengidentifikasi dominasi kategori tertentu dalam dataset.
+  
   ![Persentase Risiko Dropout Mahasiswa](https://github.com/user-attachments/assets/6638cfec-906f-4fb8-9ce2-747a492f4511)
 
 
@@ -143,18 +144,20 @@ Berikut adalah ringkasan frekuensi dan persentase distribusi berdasarkan status 
 
 | Status Pekerjaan | Jumlah | Persentase (%) |
 |-------------------|--------|----------------|
-| Tidak Bekerja    | [Jumlah] | [Persentase]   |
-| Bekerja          | [Jumlah] | [Persentase]   |
+| Tidak Bekerja    | 2121 | 53.025   |
+| Bekerja          | 1879| 46.975  |
 
 *Catatan: Nilai pasti akan tergantung pada data lengkap dataset. Berdasarkan sampel awal, distribusi ini mencerminkan variasi status pekerjaan.*
 
 #### Visualisasi
 - **Diagram Batang**:  
   Grafik batang menggambarkan jumlah mahasiswa untuk setiap kategori status pekerjaan. Sumbu X menunjukkan kategori (Tidak Bekerja, Bekerja), dan sumbu Y menunjukkan jumlah mahasiswa. Rotasi label sumbu X sebesar 45 derajat memastikan keterbacaan.
+  
   ![Frekuensi Status Pekerjaan](https://github.com/user-attachments/assets/a7da60ac-e79f-4fe7-8abf-5532ad669a71)
 
 - **Diagram Lingkaran**:  
   Diagram lingkaran menampilkan proporsi persentase status pekerjaan dengan label persentase hingga dua desimal. Grafik ini dimulai dari sudut 90 derajat untuk tampilan yang lebih estetis.
+  
   ![Distribusi Persentase Status Pekerjaan](https://github.com/user-attachments/assets/fef9d1b0-2398-498d-ab83-8c988e97d595)
 
 
@@ -170,19 +173,21 @@ Berikut adalah ringkasan frekuensi dan persentase distribusi berdasarkan status 
 
 | Status Ekonomi | Jumlah | Persentase (%) |
 |-----------------|--------|----------------|
-| Rendah         | [Jumlah] | [Persentase]   |
-| Menengah       | [Jumlah] | [Persentase]   |
-| Tinggi         | [Jumlah] | [Persentase]   |
+| Rendah         | 1779 | 44.475   |
+| Menengah       | 1593 | 39.825  |
+| Tinggi         |  628 | 15.700   |
 
 *Catatan: Nilai pasti akan bergantung pada data lengkap dataset. Sampel awal menunjukkan variasi yang seimbang di antara ketiga kategori.*
 
 #### Visualisasi
 - **Diagram Batang**:  
   Grafik batang mengilustrasikan jumlah mahasiswa untuk setiap tingkat status ekonomi. Sumbu X menampilkan kategori (Rendah, Menengah, Tinggi), dan sumbu Y menunjukkan jumlah mahasiswa, dengan rotasi label 45 derajat untuk kejelasan.
+  
   ![Frekuensi Status Ekonomi](https://github.com/user-attachments/assets/2f4ea486-ebcf-43ee-abd9-b262f11db679)
 
 - **Diagram Lingkaran**:  
   Diagram lingkaran menyajikan proporsi persentase status ekonomi dengan label hingga dua desimal, dimulai dari sudut 90 derajat untuk estetika yang lebih baik.
+  
   ![Distribusi Persentase Status Ekonomi](https://github.com/user-attachments/assets/f15b23a2-2f15-4d54-9989-4e61c7933708)
 
 
