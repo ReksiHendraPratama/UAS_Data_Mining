@@ -117,3 +117,74 @@ Dataset ini merupakan kumpulan data buatan (*dummy dataset*) yang dirancang khus
 - **Distribusi Data**: Nilai IPK berkisar antara 2.00 hingga 3.58, dengan kehadiran dan aktivitas daring bervariasi antara 63.18% hingga 89.84%. Status pekerjaan dan ekonomi menunjukkan variasi yang seimbang di antara kategori yang ada.
 - **Korelasi Awal**: Ada indikasi bahwa mahasiswa dengan aktivitas daring di bawah 70% dan IPK rendah (di bawah 2.5) mungkin memiliki risiko *drop out* lebih tinggi, meskipun analisis lanjutan diperlukan.
 - **Kesesuaian**: Dataset ini cukup representatif untuk memodelkan risiko *drop out* dengan memanfaatkan kombinasi fitur akademik dan demografis.
+---
+
+## Univariate Data Analysis
+
+### 📊 Analisis Distribusi Risiko Dropout
+
+#### Persentase Risiko Dropout
+Analisis distribusi status risiko dropout dilakukan untuk memahami proporsi mahasiswa yang berada dalam kategori aman (0) dan berisiko tinggi (1). Berdasarkan perhitungan, persentase ditampilkan sebagai berikut:
+
+- **Diagram Batang**:  
+  Grafik batang menunjukkan perbandingan persentase antara status aman dan berisiko tinggi. Sumbu X mewakili status risiko (0 = Aman, 1 = Risiko Tinggi), sementara sumbu Y menunjukkan persentase. Grafik ini membantu mengidentifikasi dominasi kategori tertentu dalam dataset.
+  ![Persentase Risiko Dropout Mahasiswa](https://github.com/user-attachments/assets/6638cfec-906f-4fb8-9ce2-747a492f4511)
+
+
+#### Interpretasi
+Distribusi risiko dropout memberikan gambaran awal tentang sebaran mahasiswa yang berpotensi menghadapi masalah putus kuliah, yang akan menjadi dasar untuk analisis lebih lanjut.
+
+---
+
+### 📋 Analisis Status Pekerjaan
+
+#### Frekuensi dan Persentase
+Berikut adalah ringkasan frekuensi dan persentase distribusi berdasarkan status pekerjaan mahasiswa:
+
+| Status Pekerjaan | Jumlah | Persentase (%) |
+|-------------------|--------|----------------|
+| Tidak Bekerja    | [Jumlah] | [Persentase]   |
+| Bekerja          | [Jumlah] | [Persentase]   |
+
+*Catatan: Nilai pasti akan tergantung pada data lengkap dataset. Berdasarkan sampel awal, distribusi ini mencerminkan variasi status pekerjaan.*
+
+#### Visualisasi
+- **Diagram Batang**:  
+  Grafik batang menggambarkan jumlah mahasiswa untuk setiap kategori status pekerjaan. Sumbu X menunjukkan kategori (Tidak Bekerja, Bekerja), dan sumbu Y menunjukkan jumlah mahasiswa. Rotasi label sumbu X sebesar 45 derajat memastikan keterbacaan.
+  ![Frekuensi Status Pekerjaan](https://github.com/user-attachments/assets/a7da60ac-e79f-4fe7-8abf-5532ad669a71)
+
+- **Diagram Lingkaran**:  
+  Diagram lingkaran menampilkan proporsi persentase status pekerjaan dengan label persentase hingga dua desimal. Grafik ini dimulai dari sudut 90 derajat untuk tampilan yang lebih estetis.
+  ![Distribusi Persentase Status Pekerjaan](https://github.com/user-attachments/assets/fef9d1b0-2398-498d-ab83-8c988e97d595)
+
+
+#### Interpretasi
+Distribusi status pekerjaan menunjukkan pengaruh potensial status ini terhadap risiko dropout, dengan kategori "Bekerja" yang mungkin terkait dengan beban kerja tambahan.
+
+---
+
+### 📋 Analisis Status Ekonomi
+
+#### Frekuensi dan Persentase
+Berikut adalah ringkasan frekuensi dan persentase distribusi berdasarkan status ekonomi mahasiswa:
+
+| Status Ekonomi | Jumlah | Persentase (%) |
+|-----------------|--------|----------------|
+| Rendah         | [Jumlah] | [Persentase]   |
+| Menengah       | [Jumlah] | [Persentase]   |
+| Tinggi         | [Jumlah] | [Persentase]   |
+
+*Catatan: Nilai pasti akan bergantung pada data lengkap dataset. Sampel awal menunjukkan variasi yang seimbang di antara ketiga kategori.*
+
+#### Visualisasi
+- **Diagram Batang**:  
+  Grafik batang mengilustrasikan jumlah mahasiswa untuk setiap tingkat status ekonomi. Sumbu X menampilkan kategori (Rendah, Menengah, Tinggi), dan sumbu Y menunjukkan jumlah mahasiswa, dengan rotasi label 45 derajat untuk kejelasan.
+  ![Frekuensi Status Ekonomi](https://github.com/user-attachments/assets/2f4ea486-ebcf-43ee-abd9-b262f11db679)
+
+- **Diagram Lingkaran**:  
+  Diagram lingkaran menyajikan proporsi persentase status ekonomi dengan label hingga dua desimal, dimulai dari sudut 90 derajat untuk estetika yang lebih baik.
+  ![Distribusi Persentase Status Ekonomi](https://github.com/user-attachments/assets/f15b23a2-2f15-4d54-9989-4e61c7933708)
+
+
+#### Interpretasi
+Distribusi status ekonomi memberikan wawasan awal tentang bagaimana kondisi finansial mahasiswa dapat memengaruhi risiko dropout, dengan kategori "Rendah" yang mungkin memerlukan perhatian khusus.
