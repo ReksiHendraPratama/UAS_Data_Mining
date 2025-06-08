@@ -386,10 +386,37 @@ Berikut adalah metrik yang digunakan untuk menilai akurasi prediksi, lengkap den
 Berdasarkan evaluasi model Random Forest menunjukkan performa luar biasa dengan akurasi 0.9825, recall 0.9750, dan F1-score 0.980447, serta confusion matrix yang lebih baik. Model ini direkomendasikan untuk sistem pendukung keputusan dalam mencegah dropout mahasiswa, sebagaimana diterapkan dalam inferensi sederhana pada proyek ini.
 ---
 
+## Deployment
+
+### Tujuan
+Tujuan deployment adalah untuk membuat aplikasi prediksi risiko dropout mahasiswa, yang saat ini berjalan secara lokal melalui file `app.py`, dapat diakses secara online oleh staf akademik, dosen, atau pihak rektorat. Dengan deployment ini, sistem dapat digunakan secara luas untuk pemantauan risiko dropout secara real-time dan mendukung pengambilan keputusan berbasis data di institusi pendidikan. Deployment juga bertujuan menjaga keandalan dan aksesibilitas aplikasi.
+
+### Pemilihan Platform
+Saya memilih **Streamlit Community Cloud** sebagai platform deployment karena gratis, mudah digunakan, dan dirancang khusus untuk aplikasi Streamlit. Platform ini mendukung deployment langsung dari GitHub, cocok untuk prototipe awal, dan memungkinkan akses publik tanpa biaya tambahan, yang sesuai dengan kebutuhan proyek saat ini.
+
+### Langkah Implementasi
+1. **Persiapan Repositori GitHub**:
+   - Membuat repositori baru di GitHub yang berisi file `app.py`, `requirements.txt` (mencantumkan dependensi seperti `streamlit`, `pandas`, `scikit-learn`, `matplotlib`, `seaborn`, dan `gdown`), serta file pendukung seperti `model_prediksi_DO.pkl` dan `dataset_mahasiswa_DO_4000_mahasiswa.csv`.
+   - Memastikan file `.streamlit/config.toml` dikonfigurasi untuk menyesuaikan judul halaman dan tema aplikasi.
+
+2. **Konfigurasi Aplikasi di Streamlit Community Cloud**:
+   - Mengunjungi situs Streamlit Community Cloud (https://streamlit.io/cloud) dan masuk menggunakan akun GitHub.
+   - Menghubungkan repositori GitHub yang berisi kode aplikasi.
+   - Menentukan `app.py` sebagai file utama aplikasi dan mengaktifkan deployment otomatis.
+
+3. **Pengujian dan Peluncuran**:
+   - Memverifikasi bahwa aplikasi berjalan dengan baik di lingkungan cloud melalui tautan yang diberikan oleh Streamlit setelah deployment selesai.
+   - Menguji fitur utama seperti prediksi, visualisasi, dan analisis untuk memastikan kompatibilitas.
+   - Membagikan tautan akses kepada pengguna terpilih (misalnya, dosen atau staf akademik) setelah deployment berhasil pada 11:09 PM WIB, Minggu, 8 Juni 2025.
+
+### Kesimpulan
+Dengan memilih Streamlit Community Cloud dan mengikuti langkah-langkah di atas, aplikasi prediksi risiko dropout mahasiswa kini dapat diakses secara online, meningkatkan aksesibilitas dan mendukung penggunaan institusi pendidikan. Proses ini menandai langkah awal menuju skalabilitas lebih lanjut seiring perkembangan proyek.
+---
 # Rencana Pengembangan Sistem ke Depan
 
 ## Pendahuluan
-Pada tanggal 11:04 PM WIB, Minggu, 8 Juni 2025, aplikasi prediksi risiko dropout mahasiswa telah berhasil dikembangkan menggunakan Streamlit dan model Random Forest (dengan akurasi 98.25%) berdasarkan dataset `dataset_mahasiswa_DO_4000_mahasiswa.csv`. Sistem ini saat ini berfungsi untuk analisis individu dan visualisasi dasar. Untuk meningkatkan dampak dan skalabilitas, rencana pengembangan sistem ke depan akan mencakup integrasi dengan sistem akademik dan visualisasi dashboard untuk pihak rektorat, diikuti oleh peningkatan spesifik pada aplikasi Streamlit.
+
+Aplikasi prediksi risiko dropout mahasiswa telah berhasil dikembangkan menggunakan Streamlit dan model Random Forest (dengan akurasi 98.25%) berdasarkan dataset `dataset_mahasiswa_DO_4000_mahasiswa.csv`. Sistem ini saat ini berfungsi untuk analisis individu dan visualisasi dasar. Untuk meningkatkan dampak dan skalabilitas, rencana pengembangan sistem ke depan akan mencakup integrasi dengan sistem akademik dan visualisasi dashboard untuk pihak rektorat, diikuti oleh peningkatan spesifik pada aplikasi Streamlit.
 
 ## Rencana Pengembangan Sistem
 
@@ -462,6 +489,7 @@ Setelah integrasi sistem dan visualisasi dasar selesai, pengembangan spesifik pa
   - Mengonfigurasi deployment dengan `requirements.txt` dan file `.streamlit/config.toml`.
   - Menyisipkan autentikasi sederhana di sidebar.
   - Menjadwalkan pelatihan ulang model setiap 6 bulan.
+---
 
-## Kesimpulan
+# Kesimpulan
 Sistem saat ini telah menunjukkan performa unggul dengan akurasi 98.25% menggunakan Random Forest, mengungguli Logistic Regression (89.38%), dan mengidentifikasi IPK, kehadiran, serta status ekonomi sebagai faktor risiko utama. Rencana pengembangan ini, dengan integrasi sistem akademik, dashboard rektorat, dan peningkatan Streamlit (upload massal, visualisasi dinamis, dan deployment), akan menjadikannya alat yang lebih robust untuk mendukung keberlanjutan akademik mahasiswa. Implementasi akan dimulai dengan integrasi data, diikuti oleh pengembangan Streamlit dan deployment.
