@@ -312,39 +312,31 @@ Berikut adalah metrik yang digunakan untuk menilai akurasi prediksi, lengkap den
 
 1.  **Akurasi (Accuracy)**
     - Rumus:
-    \[
-    \text{Akurasi} = \frac{TP + TN}{TP + TN + FP + FN}
-    \]
+    $$\text{Akurasi} = \frac{TP + TN}{TP + TN + FP + FN}$$
     - Keterangan:
-        - \(TP\) (True Positive): Jumlah prediksi benar untuk kelas Risiko Tinggi.
-        - \(TN\) (True Negative): Jumlah prediksi benar untuk kelas Aman.
-        - \(FP\) (False Positive): Jumlah prediksi salah untuk kelas Risiko Tinggi (seharusnya Aman).
-        - \(FN\) (False Negative): Jumlah prediksi salah untuk kelas Aman (seharusnya Risiko Tinggi).
+        - $TP$ (True Positive): Jumlah prediksi benar untuk kelas Risiko Tinggi.
+        - $TN$ (True Negative): Jumlah prediksi benar untuk kelas Aman.
+        - $FP$ (False Positive): Jumlah prediksi salah untuk kelas Risiko Tinggi (seharusnya Aman).
+        - $FN$ (False Negative): Jumlah prediksi salah untuk kelas Aman (seharusnya Risiko Tinggi).
     - Interpretasi: Menunjukkan proporsi prediksi yang benar dari total prediksi.
 
 2.  **Presisi (Precision)**
     - Rumus:
-    \[
-    \text{Presisi} = \frac{TP}{TP + FP}
-    \]
+    $$\text{Presisi} = \frac{TP}{TP + FP}$$
     - Keterangan:
         - Mengukur seberapa banyak prediksi positif yang benar dari total prediksi positif.
-    - Interpretasi: Penting dalam konteks di mana false positive (memprediksi Risiko Tinggi padahal Aman) harus diminimalkan, misalnya untuk menghindari kepanikan yang tidak perlu.
+    - Interpretasi: Penting dalam konteks di mana *false positive* (memprediksi Risiko Tinggi padahal Aman) harus diminimalkan, misalnya untuk menghindari kepanikan yang tidak perlu.
 
 3.  **Recall (Sensitivity atau True Positive Rate)**
     - Rumus:
-    \[
-    \text{Recall} = \frac{TP}{TP + FN}
-    \]
+    $$\text{Recall} = \frac{TP}{TP + FN}$$
     - Keterangan:
         - Mengukur seberapa banyak kasus positif yang benar-benar terdeteksi dari total kasus positif aktual.
-    - Interpretasi: Kritis dalam konteks di mana false negative (gagal mendeteksi Risiko Tinggi) harus dihindari, misalnya untuk memastikan semua mahasiswa berisiko mendapatkan intervensi.
+    - Interpretasi: Kritis dalam konteks di mana *false negative* (gagal mendeteksi Risiko Tinggi) harus dihindari, misalnya untuk memastikan semua mahasiswa berisiko mendapatkan intervensi.
 
 4.  **F1-Score**
     - Rumus:
-    \[
-    \text{F1-Score} = 2 \cdot \frac{\text{Presisi} \cdot \text{Recall}}{\text{Presisi} + \text{Recall}}
-    \]
+    $$\text{F1-Score} = 2 \cdot \frac{\text{Presisi} \cdot \text{Recall}}{\text{Presisi} + \text{Recall}}$$
     - Keterangan:
         - Harmonik rata-rata dari presisi dan recall, memberikan keseimbangan antara keduanya.
     - Interpretasi: Berguna ketika ada ketidakseimbangan antara presisi dan recall, memberikan gambaran keseluruhan performa model.
