@@ -197,7 +197,7 @@ Distribusi status ekonomi memberikan wawasan awal tentang bagaimana kondisi fina
 ## Data Preprocessing
 
 ### 📋 Tujuan Preprocessing
-Tahap ini bertujuan untuk mempersiapkan dataset `dataset_mahasiswa_DO_4000_mahasiswa.csv` agar siap digunakan dalam pemodelan prediksi risiko dropout mahasiswa. Proses ini mencakup pembersihan data awal, transformasi variabel kategorikal, dan normalisasi fitur numerik untuk memastikan kompatibilitas dengan model machine learning, khususnya Random Forest.
+Tahap ini bertujuan untuk mempersiapkan dataset `dataset_mahasiswa_DO_4000_mahasiswa.csv` agar siap digunakan dalam pemodelan prediksi risiko dropout mahasiswa. Proses ini mencakup pembersihan data awal, pembagian data menjadi set pelatihan dan pengujian, transformasi variabel kategorikal, dan normalisasi fitur numerik untuk memastikan kompatibilitas dengan model machine learning, khususnya Random Forest.
 
 ### 🔧 Langkah-Langkah Preprocessing
 
@@ -206,10 +206,21 @@ Tahap ini bertujuan untuk mempersiapkan dataset `dataset_mahasiswa_DO_4000_mahas
 - **Penghapusan Duplikat**: Data diperiksa untuk mendeteksi duplikat berdasarkan semua kolom. Tidak ditemukan baris yang identik, sehingga dataset dipertahankan dalam kondisi aslinya.
 - **Penghapusan Kolom Tidak Relevan**: Kolom `NIM` sebagai pengenal unik dihapus dari analisis numerik untuk mencegah interferensi dalam pemodelan, karena tidak memberikan kontribusi pada prediksi risiko dropout.
 
-#### 2. Transformasi Variabel Kategorikal
+#### 2. Train-Test Split
+- **Pembagian Data**: Dataset dibagi menjadi set pelatihan (`X_train`, `y_train`) dan set pengujian (`X_test`, `y_test`) menggunakan fungsi `train_test_split` dari `scikit-learn`. Pembagian dilakukan dengan parameter berikut:
+  - `test_size=0.2`: 20% data (800 baris) digunakan untuk pengujian, dan 80% data (3200 baris) untuk pelatihan, berdasarkan total 4000 baris dataset.
+  - `random_state=42`: Memastikan pembagian data dapat direproduksi.
+  - `stratify=target`: Memastikan distribusi kelas target (`Status_Risiko_DO`) tetap seimbang antara set pelatihan dan pengujian.
+- **Hasil Pembagian**:
+  - Jumlah total dataset: 4000
+  - Jumlah data latih: 3200
+  - Jumlah data uji: 800
+- **Tujuan**: Pembagian ini memungkinkan evaluasi model secara independen pada data yang tidak digunakan selama pelatihan, sehingga memberikan gambaran akurat tentang performa model.
+
+#### 3. Transformasi Variabel Kategorikal
 - **Encoding Variabel Kategorikal**: Variabel `Status_Pekerjaan` (Tidak Bekerja, Bekerja) dan `Status_Ekonomi` (Rendah, Menengah, Tinggi) dikonversi menjadi format numerik sebelum pemodelan. Dalam proses inferensi, pengguna diminta memasukkan nilai langsung (0 untuk Tidak Bekerja/Rendah, 1 untuk Bekerja/Menengah, 2 untuk Tinggi) sesuai panduan yang diberikan, sehingga proses encoding dilakukan secara manual melalui input pengguna.
 
-#### 3. Normalisasi Fitur Numerik
+#### 4. Normalisasi Fitur Numerik
 - **Metode Normalisasi**: Fitur numerik seperti `IPK_Semester_1` hingga `IPK_Semester_6`, `Kehadiran_Per_Mata_Kuliah`, `Riwayat_Pengambilan_Ulang`, `Aktivitas_Sistem_Pembelajaran_Daring`, dan `Beban_Kerja_JamPerMinggu` dinormalisasi menggunakan `MinMaxScaler` untuk menskalakan data ke rentang [0, 1]. Proses ini dilakukan untuk memastikan semua fitur memiliki skala yang seragam, yang penting untuk performa model Random Forest.
 - **Langkah Pelaksanaan**: 
   - Fitur numerik dipisahkan dari fitur kategorikal.
@@ -219,7 +230,7 @@ Tahap ini bertujuan untuk mempersiapkan dataset `dataset_mahasiswa_DO_4000_mahas
   - Sebelum normalisasi: `IPK_Semester_1` berkisar antara 2.00 hingga 3.58.
   - Setelah normalisasi: Diubah ke rentang 0 hingga 1 berdasarkan nilai minimum dan maksimum dari data pelatihan.
 
-#### 4. Validasi Input Pengguna
+#### 5. Validasi Input Pengguna
 - **Pengecekan Rentang**: Sebelum normalisasi, input dari pengguna divalidasi untuk memastikan nilai berada dalam rentang yang sesuai:
   - `IPK_Semester_1` sampai `IPK_Semester_6`: 0.0 hingga 4.0.
   - `Kehadiran_Per_Mata_Kuliah` dan `Aktivitas_Sistem_Pembelajaran_Daring`: 0 hingga 100.
@@ -230,9 +241,9 @@ Tahap ini bertujuan untuk mempersiapkan dataset `dataset_mahasiswa_DO_4000_mahas
 - **Penanganan Kesalahan**: Jika input tidak valid (misalnya, angka di luar rentang atau bukan numerik), pengguna diminta mengulang input hingga memenuhi kriteria.
 
 ### 📊 Hasil Preprocessing
-- Dataset akhir yang digunakan untuk prediksi terdiri dari fitur numerik yang telah dinormalisasi dan fitur kategorikal yang dikonversi ke format numerik. Contoh input pengguna (misalnya, IPK 3.8, Kehadiran 70%, dll.) diubah menjadi skala yang sesuai sebelum dimasukkan ke model Random Forest.
+- Dataset akhir yang digunakan untuk prediksi terdiri dari fitur numerik yang telah dinormalisasi dan fitur kategorikal yang dikonversi ke format numerik. Set pelatihan (3200 baris) digunakan untuk melatih model, sementara set pengujian (800 baris) digunakan untuk evaluasi. Contoh input pengguna (misalnya, IPK 3.8, Kehadiran 70%, dll.) diubah menjadi skala yang sesuai sebelum dimasukkan ke model Random Forest.
 - Proses ini memastikan data bersih, konsisten, dan siap untuk tahap pemodelan serta inferensi.
 
 ### 📝 Catatan
 - Normalisasi hanya diterapkan pada fitur numerik, sedangkan fitur kategorikal langsung digunakan dalam bentuk numerik berdasarkan input pengguna.
-- Model Random Forest yang telah dilatih sebelumnya digunakan untuk prediksi berdasarkan data yang telah dipreproses.
+- Model Random Forest yang telah dilatih menggunakan set pelatihan ini digunakan untuk prediksi berdasarkan data yang telah dipreproses.
