@@ -343,7 +343,125 @@ Berikut adalah metrik yang digunakan untuk menilai akurasi prediksi, lengkap den
 
 ## Hasil Evaluasi
 
-### 5.1 Random Forest
-Berikut adalah hasil evaluasi untuk model Random Forest berdasarkan data uji:
+### Metrik Performa Model
+| Model            | Accuracy | Precision    | Recall | F1-Score       |
+| ---------------- | -------- | ------------ | ------ | -------------- |
+| Random Forest    | 0.9825   | 0.985955     | 0.9750 | 0.980447       |
+| Logistic Regression | 0.89375 | 0.887324     | 0.8750 | 0.881119       |
 
-- **Classification Report**:
+- **Random Forest**:  
+  - Akurasi: 0.9825 (98.25%) menunjukkan proporsi prediksi yang sangat tinggi.  
+  - Presisi: 0.985955 (98.60%) menunjukkan kemampuan model meminimalkan false positive dengan sangat baik.  
+  - Recall: 0.9750 (97.50%) menunjukkan deteksi yang sangat efektif untuk Risiko Tinggi.  
+  - F1-Score: 0.980447 (98.04%) menunjukkan keseimbangan yang optimal.
+
+- **Logistic Regression**:  
+  - Akurasi: 0.89375 (89.38%) menunjukkan performa yang baik tetapi lebih rendah.  
+  - Presisi: 0.887324 (88.73%) menunjukkan lebih banyak false positive dibandingkan Random Forest.  
+  - Recall: 0.8750 (87.50%) menunjukkan deteksi yang lebih lemah untuk Risiko Tinggi.  
+  - F1-Score: 0.881119 (88.11%) menunjukkan keseimbangan yang lebih rendah.
+
+### Confusion Matrix
+#### 5.1 Random Forest
+- Visualisasi:
+
+![image](https://github.com/user-attachments/assets/641a9cb5-028f-4dc9-b6a4-f8def6c950f3)
+
+
+- Penjelasan: Matriks menunjukkan 435 kasus Aman diprediksi benar (TN), 5 kasus Aman salah diprediksi sebagai Risiko Tinggi (FP), 9 kasus Risiko Tinggi salah diprediksi sebagai Aman (FN), dan 351 kasus Risiko Tinggi diprediksi benar (TP). Performa sangat tinggi dengan sedikit kesalahan, dan recall tinggi (351/360 = 97.50%) menunjukkan kemampuan deteksi Risiko Tinggi yang luar biasa.
+
+#### 5.2 Logistic Regression 
+- Visualisasi:
+
+![image](https://github.com/user-attachments/assets/3f23294a-e106-4290-8844-ccb513af50c0)
+
+- Penjelasan: Matriks menunjukkan 400 kasus Aman diprediksi benar (TN), 40 kasus Aman salah diprediksi sebagai Risiko Tinggi (FP), 45 kasus Risiko Tinggi salah diprediksi sebagai Aman (FN), dan 315 kasus Risiko Tinggi diprediksi benar (TP). Model memiliki lebih banyak kesalahan (85 total), dengan recall lebih rendah (315/360 = 87.50%), menunjukkan deteksi yang kurang optimal.
+
+## Perbandingan dan Analisis
+- **Random Forest** unggul signifikan dibandingkan **Logistic Regression** dalam semua metrik, terutama akurasi (0.9825 vs 0.89375) dan recall (0.9750 vs 0.8750), yang krusial untuk mendeteksi mahasiswa berisiko.  
+- Confusion matrix Random Forest menunjukkan distribusi lebih seimbang dengan kesalahan sangat minim (14 kesalahan total vs 85 kesalahan pada Logistic Regression), menegaskan superioritasnya.  
+- Pilihan Random Forest untuk disimpan dan digunakan dalam inferensi (seperti yang terlihat pada kode `joblib.dump(rf_model, 'model_prediksi_DO.pkl')`) didasarkan pada akurasi dan generalisasi yang jauh lebih baik.
+
+## Kesimpulan
+Berdasarkan evaluasi model Random Forest menunjukkan performa luar biasa dengan akurasi 0.9825, recall 0.9750, dan F1-score 0.980447, serta confusion matrix yang lebih baik. Model ini direkomendasikan untuk sistem pendukung keputusan dalam mencegah dropout mahasiswa, sebagaimana diterapkan dalam inferensi sederhana pada proyek ini.
+---
+
+# Rencana Pengembangan Sistem ke Depan
+
+## Pendahuluan
+Pada tanggal 11:04 PM WIB, Minggu, 8 Juni 2025, aplikasi prediksi risiko dropout mahasiswa telah berhasil dikembangkan menggunakan Streamlit dan model Random Forest (dengan akurasi 98.25%) berdasarkan dataset `dataset_mahasiswa_DO_4000_mahasiswa.csv`. Sistem ini saat ini berfungsi untuk analisis individu dan visualisasi dasar. Untuk meningkatkan dampak dan skalabilitas, rencana pengembangan sistem ke depan akan mencakup integrasi dengan sistem akademik dan visualisasi dashboard untuk pihak rektorat, diikuti oleh peningkatan spesifik pada aplikasi Streamlit.
+
+## Rencana Pengembangan Sistem
+
+### a. Integrasi dengan Sistem Informasi Akademik
+- **Tujuan**: Memastikan data mahasiswa diperbarui secara real-time dari sistem internal universitas.
+- **Deskripsi**: Mengintegrasikan aplikasi dengan sistem akademik melalui API untuk mengimpor data seperti IPK, kehadiran, dan status pekerjaan/ekonomi secara otomatis. Fungsi `load_data()` akan diperluas untuk mendukung koneksi database, dan notifikasi akan diaktifkan berdasarkan prediksi risiko.
+- **Manfaat**: Mengurangi ketergantungan pada file CSV manual dan memungkinkan pemantauan berkelanjutan.
+- **Langkah Implementasi**: 
+  - Menambahkan pustaka seperti `psycopg2` untuk koneksi database (misalnya PostgreSQL).
+  - Memodifikasi `load_data()` untuk mengambil data via API atau query SQL.
+  - Menguji integrasi dengan data uji coba dari sistem akademik universitas.
+
+### b. Visualisasi Dashboard untuk Pihak Rektorat
+- **Tujuan**: Menyediakan alat analisis strategis untuk pengambilan keputusan institusi.
+- **Deskripsi**: Menambahkan tab baru di Streamlit berjudul "Laporan Rektorat" dengan fitur filter interaktif (berdasarkan fakultas, semester, atau status ekonomi) menggunakan `st.selectbox`. Visualisasi akan mencakup grafik tren risiko dropout dan heatmap distribusi berdasarkan fitur utama menggunakan `plotly` atau `seaborn`.
+- **Manfaat**: Membantu rektorat mengidentifikasi pola risiko secara keseluruhan dan merancang intervensi berbasis data.
+- **Langkah Implementasi**: 
+  - Membuat tab baru dengan filter dinamis untuk agregasi data.
+  - Mengintegrasikan visualisasi interaktif dengan `st.plotly_chart` atau `st.pyplot`.
+  - Menguji dashboard dengan data simulasi dari berbagai fakultas.
+
+### c. Fitur Tambahan pada Sistem
+| Fitur                | Deskripsi                                  |
+| -------------------- | ------------------------------------------ |
+| Sinkronisasi Data    | Tarik data real-time dari sistem akademik   |
+| Filter Analisis      | Pilih kriteria (fakultas, semester, dll.)   |
+| Tren Risiko          | Tampilkan grafik perkembangan risiko        |
+| Ekspor Laporan       | Unduh laporan analisis dalam format PDF     |
+| Notifikasi Otomatis  | Kirim peringatan untuk mahasiswa berisiko   |
+
+### d. Contoh Visualisasi
+- **Tren Risiko Dropout**: Grafik garis menunjukkan perubahan risiko berdasarkan semester dengan `plt.plot()` atau `plotly`.
+- **Heatmap Distribusi**: Visualisasi hubungan antara status ekonomi dan risiko dropout dengan `sns.heatmap()` di tab rektorat.
+- **st.plotly_chart()**: Menampilkan visualisasi interaktif langsung di Streamlit.
+
+## Pengembangan Lebih Lanjut Aplikasi Streamlit
+Setelah integrasi sistem dan visualisasi dasar selesai, pengembangan spesifik pada Streamlit akan difokuskan untuk meningkatkan pengalaman pengguna dan analisis data.
+
+### a. Dukungan Upload Data Massal
+- **Tujuan**: Memungkinkan prediksi untuk banyak mahasiswa sekaligus.
+- **Deskripsi**: Menambahkan `st.file_uploader` di tab "Prediksi Dropout" untuk mengunggah file CSV. Fungsi `preprocess_data_for_prediction` akan diadaptasi untuk memproses data batch, dan hasilnya ditampilkan dalam tabel interaktif dengan `st.dataframe`.
+- **Manfaat**: Mendukung analisis kelompok besar, seperti seluruh mahasiswa suatu program studi.
+- **Langkah Implementasi**: 
+  - Menyisipkan `uploaded_file = st.file_uploader("Unggah file CSV", type="csv")`.
+  - Mengembangkan loop untuk memproses setiap baris dan memanggil `predict_dropout`.
+  - Menampilkan tabel hasil dengan kolom status dan probabilitas.
+
+### b. Visualisasi Interaktif dengan Plotly
+- **Tujuan**: Meningkatkan kemampuan analisis visual untuk pengguna.
+- **Deskripsi**: Mengganti visualisasi statis (`matplotlib`/`seaborn`) dengan `plotly` untuk grafik interaktif, seperti scatter plot risiko berdasarkan IPK dan kehadiran, serta bar chart distribusi status ekonomi.
+- **Manfaat**: Memberikan fleksibilitas untuk zoom, hover, dan eksplorasi data secara mendalam.
+- **Langkah Implementasi**: 
+  - Mengimpor `plotly.express` dan mengganti `st.pyplot` dengan `st.plotly_chart`.
+  - Mengadaptasi kode visualisasi existing (misalnya, distribusi risiko dropout) ke format Plotly.
+  - Menguji interaktivitas dengan data uji coba.
+
+### c. Fitur Tambahan pada Streamlit
+| Fitur                | Deskripsi                                  |
+| -------------------- | ------------------------------------------ |
+| Unggah Data Batch    | Prediksi untuk banyak mahasiswa sekaligus   |
+| Visualisasi Dinamis  | Grafik interaktif dengan Plotly            |
+| Riwayat Prediksi     | Simpan dan tampilkan riwayat prediksi       |
+| Unduh Hasil          | Ekspor prediksi ke file CSV                |
+
+### d. Penyebarluasan dan Pemeliharaan Streamlit
+- **Tujuan**: Memastikan aksesibilitas dan keandalan jangka panjang.
+- **Deskripsi**: Mendeploy aplikasi ke Streamlit Community Cloud dengan autentikasi pengguna menggunakan Streamlit Secrets. Menambahkan jadwal pembaruan model secara berkala berdasarkan data terbaru.
+- **Manfaat**: Meningkatkan akses staf akademik dan menjaga performa model.
+- **Langkah Implementasi**: 
+  - Mengonfigurasi deployment dengan `requirements.txt` dan file `.streamlit/config.toml`.
+  - Menyisipkan autentikasi sederhana di sidebar.
+  - Menjadwalkan pelatihan ulang model setiap 6 bulan.
+
+## Kesimpulan
+Sistem saat ini telah menunjukkan performa unggul dengan akurasi 98.25% menggunakan Random Forest, mengungguli Logistic Regression (89.38%), dan mengidentifikasi IPK, kehadiran, serta status ekonomi sebagai faktor risiko utama. Rencana pengembangan ini, dengan integrasi sistem akademik, dashboard rektorat, dan peningkatan Streamlit (upload massal, visualisasi dinamis, dan deployment), akan menjadikannya alat yang lebih robust untuk mendukung keberlanjutan akademik mahasiswa. Implementasi akan dimulai dengan integrasi data, diikuti oleh pengembangan Streamlit dan deployment.
