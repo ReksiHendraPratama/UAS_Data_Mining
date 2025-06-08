@@ -147,7 +147,6 @@ Berikut adalah ringkasan frekuensi dan persentase distribusi berdasarkan status 
 | Tidak Bekerja    | 2121 | 53.025   |
 | Bekerja          | 1879| 46.975  |
 
-*Catatan: Nilai pasti akan tergantung pada data lengkap dataset. Berdasarkan sampel awal, distribusi ini mencerminkan variasi status pekerjaan.*
 
 #### Visualisasi
 - **Diagram Batang**:  
@@ -177,7 +176,6 @@ Berikut adalah ringkasan frekuensi dan persentase distribusi berdasarkan status 
 | Menengah       | 1593 | 39.825  |
 | Tinggi         |  628 | 15.700   |
 
-*Catatan: Nilai pasti akan bergantung pada data lengkap dataset. Sampel awal menunjukkan variasi yang seimbang di antara ketiga kategori.*
 
 #### Visualisasi
 - **Diagram Batang**:  
