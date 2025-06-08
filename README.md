@@ -408,7 +408,14 @@ Saya memilih **Streamlit Community Cloud** sebagai platform deployment karena gr
 3. **Pengujian dan Peluncuran**:
    - Memverifikasi bahwa aplikasi berjalan dengan baik di lingkungan cloud melalui tautan yang diberikan oleh Streamlit setelah deployment selesai.
    - Menguji fitur utama seperti prediksi, visualisasi, dan analisis untuk memastikan kompatibilitas.
-   - Membagikan tautan akses kepada pengguna terpilih (misalnya, dosen atau staf akademik) setelah deployment berhasil pada 11:09 PM WIB, Minggu, 8 Juni 2025.
+   - Membagikan tautan akses kepada pengguna terpilih (misalnya, dosen atau staf akademik) setelah deployment berhasil.
+  
+### Contoh Prediksi
+- Prediksi Status Aman
+  ![image](https://github.com/user-attachments/assets/1e3b6039-8c0d-4ee4-9490-71c283a321d1)
+
+- Prediksi Status Risiko Tinggi
+  ![image](https://github.com/user-attachments/assets/ef0efcfb-2e2b-408f-b84a-010d98b172a0)
 
 ### Kesimpulan
 Dengan memilih Streamlit Community Cloud dan mengikuti langkah-langkah di atas, aplikasi prediksi risiko dropout mahasiswa kini dapat diakses secara online, meningkatkan aksesibilitas dan mendukung penggunaan institusi pendidikan. Proses ini menandai langkah awal menuju skalabilitas lebih lanjut seiring perkembangan proyek.
