@@ -384,6 +384,7 @@ Berikut adalah metrik yang digunakan untuk menilai akurasi prediksi, lengkap den
 
 ## Kesimpulan
 Berdasarkan evaluasi model Random Forest menunjukkan performa luar biasa dengan akurasi 0.9825, recall 0.9750, dan F1-score 0.980447, serta confusion matrix yang lebih baik. Model ini direkomendasikan untuk sistem pendukung keputusan dalam mencegah dropout mahasiswa, sebagaimana diterapkan dalam inferensi sederhana pada proyek ini.
+
 ---
 
 ## Deployment
@@ -411,12 +412,14 @@ Saya memilih **Streamlit Community Cloud** sebagai platform deployment karena gr
 
 ### Kesimpulan
 Dengan memilih Streamlit Community Cloud dan mengikuti langkah-langkah di atas, aplikasi prediksi risiko dropout mahasiswa kini dapat diakses secara online, meningkatkan aksesibilitas dan mendukung penggunaan institusi pendidikan. Proses ini menandai langkah awal menuju skalabilitas lebih lanjut seiring perkembangan proyek.
+
 ---
 # Rencana Pengembangan Sistem ke Depan
 
 ## Pendahuluan
 
 Aplikasi prediksi risiko dropout mahasiswa telah berhasil dikembangkan menggunakan Streamlit dan model Random Forest (dengan akurasi 98.25%) berdasarkan dataset `dataset_mahasiswa_DO_4000_mahasiswa.csv`. Sistem ini saat ini berfungsi untuk analisis individu dan visualisasi dasar. Untuk meningkatkan dampak dan skalabilitas, rencana pengembangan sistem ke depan akan mencakup integrasi dengan sistem akademik dan visualisasi dashboard untuk pihak rektorat, diikuti oleh peningkatan spesifik pada aplikasi Streamlit.
+
 
 ## Rencana Pengembangan Sistem
 
