@@ -191,3 +191,48 @@ Berikut adalah ringkasan frekuensi dan persentase distribusi berdasarkan status 
 
 #### Interpretasi
 Distribusi status ekonomi memberikan wawasan awal tentang bagaimana kondisi finansial mahasiswa dapat memengaruhi risiko dropout, dengan kategori "Rendah" yang mungkin memerlukan perhatian khusus.
+
+---
+
+## Data Preprocessing
+
+### 📋 Tujuan Preprocessing
+Tahap ini bertujuan untuk mempersiapkan dataset `dataset_mahasiswa_DO_4000_mahasiswa.csv` agar siap digunakan dalam pemodelan prediksi risiko dropout mahasiswa. Proses ini mencakup pembersihan data awal, transformasi variabel kategorikal, dan normalisasi fitur numerik untuk memastikan kompatibilitas dengan model machine learning, khususnya Random Forest.
+
+### 🔧 Langkah-Langkah Preprocessing
+
+#### 1. Pembersihan Data Awal
+- **Penanganan Nilai Hilang**: Dataset diperiksa untuk memastikan tidak ada nilai yang hilang (*missing values*). Berdasarkan analisis awal pada notebook, dataset ini telah bersih dari data kosong, sehingga tidak diperlukan imputasi atau penghapusan baris/kolom.
+- **Penghapusan Duplikat**: Data diperiksa untuk mendeteksi duplikat berdasarkan semua kolom. Tidak ditemukan baris yang identik, sehingga dataset dipertahankan dalam kondisi aslinya.
+- **Penghapusan Kolom Tidak Relevan**: Kolom `NIM` sebagai pengenal unik dihapus dari analisis numerik untuk mencegah interferensi dalam pemodelan, karena tidak memberikan kontribusi pada prediksi risiko dropout.
+
+#### 2. Transformasi Variabel Kategorikal
+- **Encoding Variabel Kategorikal**: Variabel `Status_Pekerjaan` (Tidak Bekerja, Bekerja) dan `Status_Ekonomi` (Rendah, Menengah, Tinggi) dikonversi menjadi format numerik sebelum pemodelan. Dalam proses inferensi, pengguna diminta memasukkan nilai langsung (0 untuk Tidak Bekerja/Rendah, 1 untuk Bekerja/Menengah, 2 untuk Tinggi) sesuai panduan yang diberikan, sehingga proses encoding dilakukan secara manual melalui input pengguna.
+
+#### 3. Normalisasi Fitur Numerik
+- **Metode Normalisasi**: Fitur numerik seperti `IPK_Semester_1` hingga `IPK_Semester_6`, `Kehadiran_Per_Mata_Kuliah`, `Riwayat_Pengambilan_Ulang`, `Aktivitas_Sistem_Pembelajaran_Daring`, dan `Beban_Kerja_JamPerMinggu` dinormalisasi menggunakan `MinMaxScaler` untuk menskalakan data ke rentang [0, 1]. Proses ini dilakukan untuk memastikan semua fitur memiliki skala yang seragam, yang penting untuk performa model Random Forest.
+- **Langkah Pelaksanaan**: 
+  - Fitur numerik dipisahkan dari fitur kategorikal.
+  - `MinMaxScaler` dilatih menggunakan data pelatihan (`X_train`) sebelumnya, lalu diterapkan pada data input pengguna untuk transformasi.
+  - Hasil normalisasi digabungkan kembali dengan fitur kategorikal untuk membentuk data input akhir.
+- **Contoh Rentang**: 
+  - Sebelum normalisasi: `IPK_Semester_1` berkisar antara 2.00 hingga 3.58.
+  - Setelah normalisasi: Diubah ke rentang 0 hingga 1 berdasarkan nilai minimum dan maksimum dari data pelatihan.
+
+#### 4. Validasi Input Pengguna
+- **Pengecekan Rentang**: Sebelum normalisasi, input dari pengguna divalidasi untuk memastikan nilai berada dalam rentang yang sesuai:
+  - `IPK_Semester_1` sampai `IPK_Semester_6`: 0.0 hingga 4.0.
+  - `Kehadiran_Per_Mata_Kuliah` dan `Aktivitas_Sistem_Pembelajaran_Daring`: 0 hingga 100.
+  - `Riwayat_Pengambilan_Ulang`: Bilangan bulat non-negatif.
+  - `Beban_Kerja_JamPerMinggu`: 0 hingga 168.
+  - `Status_Pekerjaan`: 0 (Tidak Bekerja) atau 1 (Bekerja).
+  - `Status_Ekonomi`: 0 (Rendah), 1 (Menengah), atau 2 (Tinggi).
+- **Penanganan Kesalahan**: Jika input tidak valid (misalnya, angka di luar rentang atau bukan numerik), pengguna diminta mengulang input hingga memenuhi kriteria.
+
+### 📊 Hasil Preprocessing
+- Dataset akhir yang digunakan untuk prediksi terdiri dari fitur numerik yang telah dinormalisasi dan fitur kategorikal yang dikonversi ke format numerik. Contoh input pengguna (misalnya, IPK 3.8, Kehadiran 70%, dll.) diubah menjadi skala yang sesuai sebelum dimasukkan ke model Random Forest.
+- Proses ini memastikan data bersih, konsisten, dan siap untuk tahap pemodelan serta inferensi.
+
+### 📝 Catatan
+- Normalisasi hanya diterapkan pada fitur numerik, sedangkan fitur kategorikal langsung digunakan dalam bentuk numerik berdasarkan input pengguna.
+- Model Random Forest yang telah dilatih sebelumnya digunakan untuk prediksi berdasarkan data yang telah dipreproses.
