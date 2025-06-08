@@ -5,6 +5,7 @@
 2. Baim Mudrik Aziz (G1A022071)  
 
 Link Dashboard: [Dashboard Prediksi Mahasiswa DO](https://uas-data-mining-reksi-baim-dropout-prediction.streamlit.app/)
+
 # Project Overview
 ## Latar Belakang
 
@@ -26,3 +27,93 @@ Dengan adanya sistem ini, diharapkan institusi pendidikan dapat meningkatkan ang
 ### Daftar Referensi
 - Devi, K., & Ratnoo, S. (2022). *Predicting student dropouts using random forest*. Journal of Statistics and Management Systems, 25(7), 1579–1590. https://doi.org/10.1080/09720510.2022.2130570
 - Vaarma, M., & Li, H. (2024). *Predicting student dropouts with machine learning: An empirical study in Finnish higher education*. Technology in Society, 76, 102474. ISSN 0160-791X. https://doi.org/10.1016/j.techsoc.2024.102474.
+---
+
+## Business Understanding
+
+### Problem Statements
+Tingginya jumlah mahasiswa yang meninggalkan studi di perguruan tinggi sebelum menyelesaikan program menjadi isu krusial yang memengaruhi baik mahasiswa maupun institusi pendidikan serta lingkungan sekitar. Beragam aspek, seperti capaian akademik yang kurang memadai (contohnya, IPK per semester), kehadiran yang tidak teratur, partisipasi daring yang rendah, tekanan kerja, status pekerjaan, dan kondisi ekonomi, sering menjadi pemicu utama. Sayangnya, pihak universitas kerap kesulitan mendeteksi mahasiswa yang berpotensi menghadapi masalah ini sejak dini, sehingga upaya pencegahan menjadi terbatas.
+
+Tanpa alat bantu berbasis data untuk pengenalan dini, kampus kehilangan kesempatan emas untuk memberikan bantuan yang sesuai kepada mahasiswa yang membutuhkan perhatian khusus.
+
+### Goals
+Tujuan utama proyek ini adalah membentuk alat prediksi berbasis data yang mampu:
+- Mengenali mahasiswa dengan risiko besar untuk meninggalkan studi berdasarkan data akademik dan latar belakang pribadi.
+- Menyelami faktor-faktor kunci seperti nilai IPK, tingkat kehadiran, keterlibatan daring, beban kerja, status pekerjaan, dan kondisi ekonomi yang memengaruhi potensi putus studi.
+- Menyediakan laporan prediksi yang dapat dimanfaatkan pihak universitas sebagai acuan untuk melaksanakan langkah pencegahan, seperti bimbingan akademik atau program pendukung.
+
+### Solution Approach
+
+Proyek ini mengadopsi kerangka kerja **CRISP-DM (Cross-Industry Standard Process for Data Mining)** dengan langkah-langkah terstruktur sebagai berikut:
+
+1. **Business Understanding**  
+   Menggali inti permasalahan, yaitu mendeteksi mahasiswa yang berisiko putus studi agar universitas dapat mengambil langkah preventif yang tepat berdasarkan data akademik dan demografis.
+
+2. **Data Understanding**  
+   Mengumpulkan dan mempelajari kumpulan data yang mencakup detail akademik (IPK per semester, kehadiran, aktivitas daring, riwayat pengulangan mata kuliah, beban kerja) serta demografis (status pekerjaan, kondisi ekonomi) dari 4000 mahasiswa. Tahap ini juga melibatkan analisis awal untuk memahami pola dan distribusi, seperti proporsi risiko putus studi dan profil pekerjaan/ekonomi.
+
+3. **Data Preparation**  
+   Membersihkan data dengan menangani nilai yang hilang dan data ganda, menormalkan fitur numerik menggunakan MinMaxScaler, serta mengonversi variabel kategorikal (status pekerjaan dan ekonomi) menjadi format yang sesuai untuk pemodelan melalui one-hot encoding.
+
+4. **Modelling**  
+   Pada tahap ini, dua metode klasifikasi diuji untuk memprediksi mahasiswa berisiko putus studi:
+   - **Random Forest**: Teknik penggabungan berbasis pohon keputusan yang unggul dalam menangani data kompleks, mampu mengatasi ketidakseimbangan, dan mencatat akurasi tinggi (98.25%) dalam proyek ini.
+   - **Logistic Regression**: Pendekatan statistik yang diuji untuk perbandingan, meskipun akurasinya lebih rendah (89.38%), memberikan pandangan tambahan tentang hubungan antar fitur dan risiko putus studi.
+   Kedua model dikonfigurasi dengan pengaturan dasar dan `random_state` untuk menjamin hasil yang konsisten, dengan Random Forest dipilih sebagai solusi utama berkat performanya yang lebih baik.
+
+5. **Evaluation**  
+   Mengukur efektivitas model dengan metrik seperti Akurasi, Presisi, Recall, F1-Score, dan Confusion Matrix untuk memastikan kemampuan model dalam mendeteksi mahasiswa berisiko secara tepat, dengan penekanan pada Random Forest sebagai pilihan utama.
+
+---
+
+## Data Understanding
+
+### 📦 Sumber Data
+
+Dataset ini merupakan kumpulan data buatan (*dummy dataset*) yang dirancang khusus untuk kebutuhan analisis risiko putus kuliah (*drop out*) mahasiswa di lingkungan perguruan tinggi.
+
+| Informasi Dasar       | Detail         |
+|-----------------------|----------------|
+| Jumlah Baris          | 4000           |
+| Jumlah Kolom          | 14             |
+| Format                | CSV            |
+
+#### ✅ Kualitas Data:
+
+- **Nilai Hilang**: Tidak terdapat nilai yang hilang (*missing values*) setelah proses pembersihan.
+- **Duplikasi**: Tidak ada data ganda yang terdeteksi setelah pemeriksaan awal.
+- **Kolom Tidak Relevan**: Kolom `NIM` digunakan sebagai pengenal unik dan dapat dihilangkan dari analisis numerik untuk mencegah kesalahan perhitungan.
+
+#### 📋 Detail Kolom:
+
+| No | Nama Kolom                   | Tipe Data | Penjelasan                                   |
+|----|------------------------------|-----------|----------------------------------------------|
+| 0  | `NIM`                        | object    | Nomor Induk Mahasiswa sebagai identitas unik |
+| 1  | `IPK_Semester_1`             | float64   | Nilai Indeks Prestasi Kumulatif semester 1   |
+| 2  | `IPK_Semester_2`             | float64   | Nilai IPK semester 2                         |
+| 3  | `IPK_Semester_3`             | float64   | Nilai IPK semester 3                         |
+| 4  | `IPK_Semester_4`             | float64   | Nilai IPK semester 4                         |
+| 5  | `IPK_Semester_5`             | float64   | Nilai IPK semester 5                         |
+| 6  | `IPK_Semester_6`             | float64   | Nilai IPK semester 6                         |
+| 7  | `Kehadiran_Per_Mata_Kuliah`  | float64   | Persentase kehadiran rata-rata per mata kuliah |
+| 8  | `Riwayat_Pengambilan_Ulang`  | int64     | Jumlah pengulangan mata kuliah               |
+| 9  | `Aktivitas_Sistem_Pembelajaran_Daring` | float64 | Persentase aktivitas di platform daring      |
+| 10 | `Beban_Kerja_JamPerMinggu`   | float64   | Jam kerja per minggu (jika bekerja)          |
+| 11 | `Status_Pekerjaan`           | object    | Status pekerjaan (tidak bekerja, bekerja)    |
+| 12 | `Status_Ekonomi`             | object    | Tingkat ekonomi (rendah, menengah, tinggi)   |
+| 13 | `Status_Risiko_DO`           | int64     | Status risiko drop out (0 = Aman, 1 = Risiko) |
+
+#### 🔍 Pratinjau Data 5 Baris Teratas:
+
+| NIM         | IPK_Semester_1 | IPK_Semester_2 | IPK_Semester_3 | IPK_Semester_4 | IPK_Semester_5 | IPK_Semester_6 | Kehadiran_Per_Mata_Kuliah | Riwayat_Pengambilan_Ulang | Aktivitas_Sistem_Pembelajaran_Daring | Beban_Kerja_JamPerMinggu | Status_Pekerjaan | Status_Ekonomi | Status_Risiko_DO |
+|-------------|----------------|----------------|----------------|----------------|----------------|----------------|--------------------------|---------------------------|--------------------------------------|--------------------------|------------------|-----------------|-----------------|
+| G1A0220000  | 2.01           | 2.10           | 2.05           | 2.08           | 2.00           | 2.17           | 89.84                     | 1                         | 65.50                              | 0                      | Tidak Bekerja   | Tinggi          | 0               |
+| G1A0220001  | 3.27           | 3.15           | 3.40           | 3.13           | 3.35           | 3.39           | 83.69                     | 1                         | 82.59                              | 33                     | Bekerja         | Menengah        | 0               |
+| G1A0220002  | 3.04           | 2.93           | 2.92           | 3.19           | 3.33           | 3.20           | 78.63                     | 0                         | 64.78                              | 0                      | Tidak Bekerja   | Tinggi          | 0               |
+| G1A0220003  | 2.00           | 2.22           | 2.11           | 2.20           | 2.00           | 2.36           | 82.09                     | 1                         | 74.19                              | 23                     | Bekerja         | Rendah          | 0               |
+| G1A0220004  | 3.58           | 3.35           | 3.52           | 3.39           | 3.15           | 3.28           | 76.21                     | 1                         | 63.18                              | 0                      | Tidak Bekerja   | Tinggi          | 0               |
+
+#### 📊 Analisis Awal
+- **Distribusi Data**: Nilai IPK berkisar antara 2.00 hingga 3.58, dengan kehadiran dan aktivitas daring bervariasi antara 63.18% hingga 89.84%. Status pekerjaan dan ekonomi menunjukkan variasi yang seimbang di antara kategori yang ada.
+- **Korelasi Awal**: Ada indikasi bahwa mahasiswa dengan aktivitas daring di bawah 70% dan IPK rendah (di bawah 2.5) mungkin memiliki risiko *drop out* lebih tinggi, meskipun analisis lanjutan diperlukan.
+- **Kesesuaian**: Dataset ini cukup representatif untuk memodelkan risiko *drop out* dengan memanfaatkan kombinasi fitur akademik dan demografis.
