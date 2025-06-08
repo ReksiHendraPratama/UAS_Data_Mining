@@ -1,5 +1,10 @@
+# Sistem Prediksi Mahasiswa Berisiko Tinggi Drop Out - Kelompok 8
+## Anggota Kelompok 8:
 
+1. Reksi Hendra Pratama (G1A022032)  
+2. Baim Mudrik Aziz (G1A022071)  
 
+Link Dashboard: [Dashboard Prediksi Mahasiswa DO](https://uas-data-mining-reksi-baim-dropout-prediction.streamlit.app/)
 # Project Overview
 ## Latar Belakang
 
