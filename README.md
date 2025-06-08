@@ -247,3 +247,111 @@ Tahap ini bertujuan untuk mempersiapkan dataset `dataset_mahasiswa_DO_4000_mahas
 ### 📝 Catatan
 - Normalisasi hanya diterapkan pada fitur numerik, sedangkan fitur kategorikal langsung digunakan dalam bentuk numerik berdasarkan input pengguna.
 - Model Random Forest yang telah dilatih menggunakan set pelatihan ini digunakan untuk prediksi berdasarkan data yang telah dipreproses.
+---
+
+## Modeling
+
+### 📋 Tujuan Modeling
+Tahap ini bertujuan untuk membangun dan melatih model machine learning untuk memprediksi risiko dropout mahasiswa berdasarkan dataset yang telah dipreproses. Dua model yang digunakan adalah Random Forest dan Logistic Regression, yang dievaluasi untuk menentukan model terbaik berdasarkan performa pada data pengujian.
+
+### 🔧 Langkah-Langkah Modeling
+
+#### 1. Random Forest
+- **Penjelasan**: Random Forest adalah model berbasis ensemble learning yang menggunakan beberapa pohon keputusan untuk melakukan klasifikasi. Setiap pohon dilatih pada subset data yang berbeda (dengan pengambilan sampel acak), dan prediksi akhir dibuat dengan mayoritas suara dari semua pohon. Model ini cocok untuk dataset dengan banyak fitur dan hubungan non-linear, seperti data akademik dan demografis mahasiswa.
+- **Pelatihan**: Model dilatih menggunakan `X_train_final` (fitur yang telah dinormalisasi dan diencode) dan `y_train` (target `Status_Risiko_DO`).
+- **Prediksi**: Prediksi dilakukan pada `X_test_final` untuk menghasilkan `y_pred_rf`.
+
+#### 2. Logistic Regression
+- **Penjelasan**: Logistic Regression adalah model klasifikasi linier yang memprediksi probabilitas keanggotaan dalam suatu kelas (dalam hal ini, 0 = Aman, 1 = Risiko Tinggi) berdasarkan kombinasi linier dari fitur. Model ini mengasumsikan hubungan linier antara fitur dan log-odds target, sehingga lebih sederhana dibandingkan Random Forest.
+- **Pelatihan**: Model dilatih menggunakan `X_train_final` dan `y_train`, dengan iterasi maksimum ditetapkan pada 1000 untuk memastikan konvergensi.
+- **Prediksi**: Prediksi dilakukan pada `X_test_final` untuk menghasilkan `y_pred_lr`.
+
+### 📊 Model Terbaik dan Alasan
+- **Model Terbaik**: Berdasarkan kode, model Random Forest dipilih sebagai model utama yang disimpan (`model_prediksi_DO.pkl`), yang menunjukkan bahwa performanya dianggap lebih baik dibandingkan Logistic Regression. Alasannya karena:
+  - Random Forest dapat menangkap hubungan non-linear dan interaksi kompleks antara fitur (misalnya, antara IPK, kehadiran, dan beban kerja), yang sering terjadi dalam data akademik.
+  - Model ini lebih robust terhadap overfitting pada dataset dengan banyak fitur, dibandingkan Logistic Regression yang lebih sensitif terhadap asumsi linieritas.
+  - Kode mencatat bahwa Random Forest "lebih bagus" yang dapat didukung oleh metrik evaluasi seperti akurasi, precision, recall, atau F1-score yang lebih tinggi pada data pengujian.
+- 
+
+### ⚙️ Parameter yang Digunakan
+- **Random Forest**:
+  - `n_estimators=100`: Jumlah pohon keputusan dalam ensemble, memberikan keseimbangan antara akurasi dan waktu komputasi.
+  - `random_state=42`: Memastikan reproduktibilitas hasil.
+- **Logistic Regression**:
+  - `random_state=42`: Memastikan reproduktibilitas hasil.
+  - `max_iter=1000`: Jumlah iterasi maksimum untuk konvergensi, mengatasi masalah jika model tidak konvergen dengan iterasi default.
+
+### 🌟 Kelebihan dan Kekurangan
+- **Random Forest**:
+  - **Kelebihan**:
+    - Dapat menangani fitur non-linear dan interaksi kompleks tanpa perlu transformasi tambahan.
+    - Tidak sensitif terhadap outlier dan nilai hilang (jika ditangani sebelumnya).
+    - Memberikan estimasi probabilitas yang baik melalui agregasi pohon.
+  - **Kekurangan**:
+    - Waktu pelatihan dan prediksi lebih lama dibandingkan Logistic Regression, terutama dengan jumlah pohon yang besar.
+    - Kurang interpretabel dibandingkan Logistic Regression karena sifatnya yang berbasis ensemble.
+- **Logistic Regression**:
+  - **Kelebihan**:
+    - Sederhana dan mudah diinterpretasikan, menunjukkan koefisien untuk setiap fitur yang berkontribusi pada prediksi.
+    - Efisien secara komputasi, cocok untuk dataset kecil atau ketika kecepatan penting.
+  - **Kekurangan**:
+    - Mengasumsikan hubungan linier antara fitur dan log-odds, yang mungkin tidak sesuai dengan data akademik yang kompleks.
+    - Kurang efektif jika terdapat interaksi tinggi antara fitur atau jika data tidak terdistribusi normal.
+---
+
+# Evaluasi Model
+
+## Pendahuluan
+Evaluasi model dilakukan untuk mengukur performa model Random Forest dan Logistic Regression dalam memprediksi risiko dropout (DO) mahasiswa berdasarkan dataset yang telah dilatih. Evaluasi ini mencakup metrik-metrik seperti akurasi, presisi, recall, dan F1-score, serta visualisasi confusion matrix untuk memberikan gambaran lebih jelas tentang performa model.
+
+## Strategi Evaluasi Model
+Strategi evaluasi model melibatkan pembagian dataset menjadi data latih (`X_train`, `y_train`) dan data uji (`X_test`, `y_test`) menggunakan metode seperti train-test split. Model dilatih pada data latih dan diuji pada data uji untuk memastikan generalisasi yang baik. Metrik evaluasi dipilih berdasarkan karakteristik masalah klasifikasi biner (Aman vs Risiko Tinggi), dengan fokus pada kemampuan model untuk mengidentifikasi kasus positif (Risiko Tinggi) secara akurat.
+
+### Metrik Evaluasi
+Berikut adalah metrik yang digunakan untuk menilai akurasi prediksi, lengkap dengan rumus dalam format LaTeX:
+
+1. **Akurasi (Accuracy)**
+   - Rumus:  
+     \[
+     \text{Akurasi} = \frac{TP + TN}{TP + TN + FP + FN}
+     \]
+   - Keterangan:  
+     - \(TP\) (True Positive): Jumlah prediksi benar untuk kelas Risiko Tinggi.
+     - \(TN\) (True Negative): Jumlah prediksi benar untuk kelas Aman.
+     - \(FP\) (False Positive): Jumlah prediksi salah untuk kelas Risiko Tinggi (seharusnya Aman).
+     - \(FN\) (False Negative): Jumlah prediksi salah untuk kelas Aman (seharusnya Risiko Tinggi).
+   - Interpretasi: Menunjukkan proporsi prediksi yang benar dari total prediksi.
+
+2. **Presisi (Precision)**
+   - Rumus:  
+     \[
+     \text{Presisi} = \frac{TP}{TP + FP}
+     \]
+   - Keterangan:  
+     - Mengukur seberapa banyak prediksi positif yang benar dari total prediksi positif.
+   - Interpretasi: Penting dalam konteks di mana false positive (memprediksi Risiko Tinggi padahal Aman) harus diminimalkan, misalnya untuk menghindari kepanikan yang tidak perlu.
+
+3. **Recall (Sensitivity atau True Positive Rate)**
+   - Rumus:  
+     \[
+     \text{Recall} = \frac{TP}{TP + FN}
+     \]
+   - Keterangan:  
+     - Mengukur seberapa banyak kasus positif yang benar-benar terdeteksi dari total kasus positif aktual.
+   - Interpretasi: Kritis dalam konteks di mana false negative (gagal mendeteksi Risiko Tinggi) harus dihindari, misalnya untuk memastikan semua mahasiswa berisiko mendapatkan intervensi.
+
+4. **F1-Score**
+   - Rumus:  
+     \[
+     \text{F1-Score} = 2 \cdot \frac{\text{Presisi} \cdot \text{Recall}}{\text{Presisi} + \text{Recall}}
+     \]
+   - Keterangan:  
+     - Harmonik rata-rata dari presisi dan recall, memberikan keseimbangan antara keduanya.
+   - Interpretasi: Berguna ketika ada ketidakseimbangan antara presisi dan recall, memberikan gambaran keseluruhan performa model.
+
+## Hasil Evaluasi
+
+### 5.1 Random Forest
+Berikut adalah hasil evaluasi untuk model Random Forest berdasarkan data uji:
+
+- **Classification Report**:
